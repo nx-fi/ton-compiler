@@ -20,6 +20,8 @@ const CompilerModule_2022_12 = require('../../bin/distrib/v2022.12/funcfiftlib.j
 const FuncFiftLibWasm_2022_12 = require('../../bin/distrib/v2022.12/funcfiftlib.wasm.js').FuncFiftLibWasm;
 const CompilerModule_2023_01 = require('../../bin/distrib/v2023.01/funcfiftlib.js');
 const FuncFiftLibWasm_2023_01 = require('../../bin/distrib/v2023.01/funcfiftlib.wasm.js').FuncFiftLibWasm;
+const CompilerModule_2024_01 = require('../../bin/distrib/v2024.01/funcfiftlib.js');
+const FuncFiftLibWasm_2024_01 = require('../../bin/distrib/v2024.01/funcfiftlib.wasm.js').FuncFiftLibWasm;
 
 type CompileResult = {
     status: "error",
@@ -46,7 +48,7 @@ const writeToCStringPtr = (mod: any, str: string, ptr: any) => {
 
 const readFromCString = (mod: any, pointer: Pointer): string => mod.UTF8ToString(pointer);
 
-export async function wasmBuild(opts: { version: 'v2022.10' | 'v2022.12' | 'v2023.01', files: string[], stdlib: boolean, workdir: string }): Promise<CompilationResult> {
+export async function wasmBuild(opts: { version: 'v2022.10' | 'v2022.12' | 'v2023.01' | 'v2024.01', files: string[], stdlib: boolean, workdir: string }): Promise<CompilationResult> {
 
     // Resolve version
     let CompilerModule: any;
@@ -60,6 +62,9 @@ export async function wasmBuild(opts: { version: 'v2022.10' | 'v2022.12' | 'v202
     } else if (opts.version === 'v2023.01') {
         CompilerModule = CompilerModule_2023_01;
         FuncFiftLibWasm = FuncFiftLibWasm_2023_01;
+    } else if (opts.version === 'v2024.01') {
+        CompilerModule = CompilerModule_2024_01;
+        FuncFiftLibWasm = FuncFiftLibWasm_2024_01;
     } else {
         throw Error('Unknown compiler version: ' + opts.version);
     }

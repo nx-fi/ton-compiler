@@ -17,6 +17,7 @@ type Version =
     | 'v2022.10'
     | 'v2022.12'
     | 'v2023.01'
+    | 'v2024.01'
     | 'legacy'
 
 export async function compileContract(opts: { files: string[], version?: Version | 'latest', stdlib?: boolean | null | undefined, workdir?: string | null | undefined }): Promise<CompilationResult> {
@@ -28,7 +29,7 @@ export async function compileContract(opts: { files: string[], version?: Version
     }
 
     // Resolve version
-    let version: Version = 'v2023.01'; // Latest
+    let version: Version = 'v2024.01'; // Latest
     if (opts.version !== 'latest' && typeof opts.version === 'string') {
         version = opts.version;
     }
@@ -59,6 +60,8 @@ export async function compileContract(opts: { files: string[], version?: Version
     } else if (version === 'v2022.12') {
         return await wasmBuild({ files: files, version, stdlib, workdir });
     } else if (version === 'v2023.01') {
+        return await wasmBuild({ files: files, version, stdlib, workdir });
+    } else if (version === 'v2024.01') {
         return await wasmBuild({ files: files, version, stdlib, workdir });
     } else {
         throw Error('Unsupported compiler version ' + version);
